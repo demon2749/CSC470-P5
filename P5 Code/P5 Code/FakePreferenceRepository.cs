@@ -20,11 +20,11 @@ namespace P5_Code
             }
         }
 
-        string GetPreference(string UserName, string PreferenceName)
+        public string GetPreference(string UserName, string PreferenceName)
         {
             throw new NotImplementedException();// ----------------------------------------------------------------------------------------------!!
         }
-        string SetPreference(string UserName, string PreferenceName, string Value)
+        public string SetPreference(string UserName, string PreferenceName, string Value)
         {
             throw new NotImplementedException();// ----------------------------------------------------------------------------------------------!!
         }
