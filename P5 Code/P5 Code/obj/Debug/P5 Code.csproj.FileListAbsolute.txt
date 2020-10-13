@@ -9,3 +9,4 @@ C:\Users\JohnStampe\Source\Repos\demon2749\CSC470-P5\P5 Code\P5 Code\obj\Debug\P
 C:\Users\JohnStampe\Source\Repos\demon2749\CSC470-P5\P5 Code\P5 Code\obj\Debug\P5 Code.exe
 C:\Users\JohnStampe\Source\Repos\demon2749\CSC470-P5\P5 Code\P5 Code\obj\Debug\P5 Code.pdb
 C:\Users\JohnStampe\Source\Repos\demon2749\CSC470-P5\P5 Code\P5 Code\obj\Debug\P5 Code.csprojAssemblyReference.cache
+C:\Users\JohnStampe\Source\Repos\demon2749\CSC470-P5\P5 Code\P5 Code\obj\Debug\P5_Code.FormSelectProject.resources

@@ -138,5 +138,17 @@ namespace P5_Code
         {
 
         }
+
+        private void selectProjectToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            using (FormSelectProject selectProject = new FormSelectProject())
+            {
+                do
+                {
+                    selectProject.ShowDialog(this);
+
+                } while (selectProject.DialogResult != DialogResult.OK);
+            }
+        }
     }
 }
