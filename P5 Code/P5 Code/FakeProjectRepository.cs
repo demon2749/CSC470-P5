@@ -28,7 +28,7 @@ namespace P5_Code
                 Projects.Add(new Project // req 6a
                 {
                     Id = GetNextId(),
-                    Name = "Sample Project Id0"
+                    Name = "Sample Project Id0",
                 });
             }
         }
@@ -70,7 +70,8 @@ namespace P5_Code
                 return NO_PROJECT_FOUND_ERROR;
             }
 
-            if(!true/*projectToDelete.Id == preference */)
+            throw new NotImplementedException();//-----------------------------------------------------------------------------------------------------------------!!
+            if (!true/*projectToDelete.Id == preference */)
             {
                 return "Cannot remove your current session project."; // i think this condition needs access to FakePrefenceRepo, which i haven't done yet.
             }
@@ -80,8 +81,7 @@ namespace P5_Code
         }
         public string Modify(int projectId, Project project)
         {
-            return NO_PROJECT_FOUND_ERROR;
-            // ------------------------------------ havent done this --------------------------------------------------
+            throw new NotImplementedException();//-----------------------------------------------------------------------------------------------------------------!!
         }
         public List<Project> GetAll()
         {
