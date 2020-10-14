@@ -186,5 +186,28 @@ namespace P5_Code
                 } while (selectProject.DialogResult == DialogResult.OK);
             }
         }
+
+        private void createProjectToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FormCreateProject createProjectForm = new FormCreateProject();
+            
+            createProjectForm.ShowDialog();
+        }
+
+
+
+        private void removeProjectToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FormRemoveProject removeProjectForm = new FormRemoveProject();
+
+            removeProjectForm.ShowDialog();
+        }
+
+        private void modifyProjectToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FormModifyProject modifyProjectForm = new FormModifyProject();
+
+            modifyProjectForm.ShowDialog();
+        }
     }
 }
