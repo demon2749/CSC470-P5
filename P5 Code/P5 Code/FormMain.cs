@@ -13,6 +13,11 @@ namespace P5_Code
     public partial class FormMain : Form
     {
         public AppUser activeUser = null;
+
+        public Project currentProject = null;
+
+        public FakePreferenceRepository preferences = new FakePreferenceRepository();
+
         public FormMain()
         {
             InitializeComponent();
@@ -32,26 +37,57 @@ namespace P5_Code
         public void LoginLoop()
         {
 
-            using (FormLogin tmp = new FormLogin())
+            using (FormLogin loginForm = new FormLogin())
             {
                 do
                 {
-                    tmp.ShowDialog(this);
+                    loginForm.ShowDialog(this);
 
-                } while (tmp.DialogResult == DialogResult.OK && (!tmp.ReturnUser?.isAuthenticated ?? true));
+                } while (loginForm.DialogResult == DialogResult.OK && (!loginForm.ReturnUser?.isAuthenticated ?? true));
 
-                if(!(tmp.DialogResult == DialogResult.OK))
+                if(!(loginForm.DialogResult == DialogResult.OK))
                 {
                     this.Close();
                 }
-                else
-                {
-                    tmp.Text = "Main - No Project Selected";
-                }
 
-                activeUser = tmp.ReturnUser;
+                activeUser = loginForm.ReturnUser;
             }
 
+            if(activeUser == null)
+            {
+                Environment.Exit(1);
+            }
+
+            using (FormSelectProject projectSelectForm = new FormSelectProject())
+            {
+                do
+                {
+                    projectSelectForm.ShowDialog(this);
+
+                } while (projectSelectForm.DialogResult == DialogResult.OK && (projectSelectForm.returnProject is null));
+
+                if (!(projectSelectForm.DialogResult == DialogResult.Cancel))
+                {
+                    this.Close();
+                }
+
+                currentProject = projectSelectForm.returnProject;
+            }
+
+            if (currentProject == null)
+            {
+                Environment.Exit(1);
+            }
+
+
+            preferences.SetPreference(activeUser.UserName, currentProject.Name, currentProject.Name);
+
+            this.SetText();
+        }
+
+        private void SetText()
+        {
+            this.Text = $"Main - {currentProject.Name}";
         }
 
         private void IssueToolStripMenuItem_Click(object sender, EventArgs e)
@@ -147,7 +183,7 @@ namespace P5_Code
                 {
                     selectProject.ShowDialog(this);
 
-                } while (selectProject.DialogResult != DialogResult.OK);
+                } while (selectProject.DialogResult == DialogResult.OK);
             }
         }
     }

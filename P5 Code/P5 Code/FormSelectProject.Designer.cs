@@ -28,25 +28,28 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.listBox1 = new System.Windows.Forms.ListBox();
+            this.projectListBox = new System.Windows.Forms.ListBox();
             this.Cancel = new System.Windows.Forms.Button();
             this.SelectProject = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
-            // listBox1
+            // projectListBox
             // 
-            this.listBox1.FormattingEnabled = true;
-            this.listBox1.Location = new System.Drawing.Point(27, 37);
-            this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(464, 238);
-            this.listBox1.TabIndex = 0;
-            this.listBox1.SelectedIndexChanged += new System.EventHandler(this.listBox1_SelectedIndexChanged);
+            this.projectListBox.FormattingEnabled = true;
+            this.projectListBox.ItemHeight = 20;
+            this.projectListBox.Location = new System.Drawing.Point(40, 57);
+            this.projectListBox.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.projectListBox.Name = "projectListBox";
+            this.projectListBox.Size = new System.Drawing.Size(694, 364);
+            this.projectListBox.TabIndex = 0;
+            this.projectListBox.SelectedIndexChanged += new System.EventHandler(this.listBox1_SelectedIndexChanged);
             // 
             // Cancel
             // 
-            this.Cancel.Location = new System.Drawing.Point(183, 311);
+            this.Cancel.Location = new System.Drawing.Point(274, 478);
+            this.Cancel.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Cancel.Name = "Cancel";
-            this.Cancel.Size = new System.Drawing.Size(126, 32);
+            this.Cancel.Size = new System.Drawing.Size(189, 49);
             this.Cancel.TabIndex = 1;
             this.Cancel.Text = "Cancel";
             this.Cancel.UseVisualStyleBackColor = true;
@@ -54,9 +57,10 @@
             // 
             // SelectProject
             // 
-            this.SelectProject.Location = new System.Drawing.Point(356, 311);
+            this.SelectProject.Location = new System.Drawing.Point(534, 478);
+            this.SelectProject.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.SelectProject.Name = "SelectProject";
-            this.SelectProject.Size = new System.Drawing.Size(126, 32);
+            this.SelectProject.Size = new System.Drawing.Size(189, 49);
             this.SelectProject.TabIndex = 2;
             this.SelectProject.Text = "Select Project";
             this.SelectProject.UseVisualStyleBackColor = true;
@@ -64,13 +68,15 @@
             // 
             // FormSelectProject
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(524, 375);
+            this.ClientSize = new System.Drawing.Size(786, 577);
             this.Controls.Add(this.SelectProject);
             this.Controls.Add(this.Cancel);
-            this.Controls.Add(this.listBox1);
+            this.Controls.Add(this.projectListBox);
+            this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "FormSelectProject";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Select Project";
             this.Load += new System.EventHandler(this.FormSelectProject_Load);
             this.ResumeLayout(false);
@@ -79,7 +85,7 @@
 
         #endregion
 
-        private System.Windows.Forms.ListBox listBox1;
+        private System.Windows.Forms.ListBox projectListBox;
         private System.Windows.Forms.Button Cancel;
         private System.Windows.Forms.Button SelectProject;
     }

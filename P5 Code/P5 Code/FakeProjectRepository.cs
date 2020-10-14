@@ -65,12 +65,13 @@ namespace P5_Code
                 }
             }
 
+            throw new NotImplementedException();
+            // Not sure if these go here.
             if(projectToDelete == null) // checks to ensure it exists, or throws error.
             {
                 return NO_PROJECT_FOUND_ERROR;
             }
 
-            throw new NotImplementedException();//-----------------------------------------------------------------------------------------------------------------!!
             if (!true/*projectToDelete.Id == preference */)
             {
                 return "Cannot remove your current session project."; // i think this condition needs access to FakePrefenceRepo, which i haven't done yet.
@@ -106,7 +107,6 @@ namespace P5_Code
             {
                 return 0;
             }
-
             foreach(Project p in Projects)
             {
                 if(p.Id > largestId)

@@ -26,6 +26,15 @@ namespace P5_Code
                     EmailAddress = "JohnDoe@gmail.com",
                     isAuthenticated = false,
                 });
+                Users.Add("a", new AppUser
+                {
+                    UserName = "a",
+                    Password = "a",
+                    FirstName = "a",
+                    LastName = "a",
+                    EmailAddress = "a@a.a",
+                    isAuthenticated = false,
+                });
             }
         }
         public bool Login(string userName, string Password)
