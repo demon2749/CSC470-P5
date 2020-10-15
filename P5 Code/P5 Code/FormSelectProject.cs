@@ -13,7 +13,7 @@ namespace P5_Code
 {
     public partial class FormSelectProject : Form
     {
-        public Project returnProject { get; set; }
+        public Project SelectedProject { get; set; }
 
         FakeProjectRepository repo;
 
@@ -29,6 +29,7 @@ namespace P5_Code
         {
             this.CenterTheForm();
             this.FillProjectList();
+            this.DialogResult = DialogResult.None;
         }
 
         private void CenterTheForm()
@@ -40,7 +41,7 @@ namespace P5_Code
         {
             projectListBox.Items.Clear(); 
 
-            foreach(Project prjt in repo.GetAll())
+            foreach (Project prjt in repo.GetAll())
             {
                 projectListBox.Items.Add(prjt.Id + " - " + prjt.Name);
             }
@@ -55,12 +56,12 @@ namespace P5_Code
         {
             if (prevClickCancel)
             {
+                this.DialogResult = DialogResult.Cancel;
                 this.Close();
             }
             else
             {
                 MessageBox.Show("A project must be selected.", "Attention");
-
                 prevClickCancel = true;
             }
         }
@@ -69,21 +70,32 @@ namespace P5_Code
         {
             prevClickCancel = false;
 
-            string selected = projectListBox.SelectedItem.ToString();
-
-            foreach (Project project in repo.GetAll())
-            {
-                if(selected == (project.Id + " - " + project.Name))
-                    returnProject = project;
-            }
-
-            if(returnProject == null)
+            if (projectListBox.SelectedItem == null)
             {
                 MessageBox.Show("A project must be selected.", "Attention");
             }
             else
             {
-                this.Close();
+                string selected = projectListBox.SelectedItem.ToString();
+
+                foreach (Project project in repo.GetAll())
+                {
+                    if (selected == (project.Id + " - " + project.Name))
+                    {
+                        SelectedProject = project;
+                    }
+                }
+
+                if (SelectedProject == null)
+                {
+                    this.DialogResult = DialogResult.No;
+                    this.Close();
+                }
+                else
+                {
+                    this.DialogResult = DialogResult.OK;
+                    this.Close();
+                }
             }
         }
     }

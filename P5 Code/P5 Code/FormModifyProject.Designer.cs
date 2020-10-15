@@ -49,6 +49,7 @@
             this.ProjectNameTextBox.Name = "ProjectNameTextBox";
             this.ProjectNameTextBox.Size = new System.Drawing.Size(203, 20);
             this.ProjectNameTextBox.TabIndex = 1;
+            this.ProjectNameTextBox.TextChanged += new System.EventHandler(this.ProjectNameTextBox_TextChanged);
             // 
             // CancelButton
             // 

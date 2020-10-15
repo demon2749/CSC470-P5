@@ -12,6 +12,14 @@ namespace P5_Code
 {
     public partial class FormModifyProject : Form
     {
+        ////////////////////////////////////////////////////////////////////////////////
+        // PROPERTIES
+
+        public string ProjectsNewName { get; set; }
+
+        ////////////////////////////////////////////////////////////////////////////////
+        // INITIALIZATION
+
         public FormModifyProject()
         {
             InitializeComponent();
@@ -28,12 +36,28 @@ namespace P5_Code
             this.StartPosition = FormStartPosition.CenterScreen;
         }
 
+        ////////////////////////////////////////////////////////////////////////////////
+        // BUTTONS
+
         private void CancelButton_Click(object sender, EventArgs e)
         {
+            this.ProjectsNewName = "";
+            this.DialogResult = DialogResult.Cancel;
             this.Close();
         }
 
         private void ModifyButton_Click(object sender, EventArgs e)
+        {
+            this.ProjectsNewName = this.ProjectNameTextBox.Text;
+            this.ProjectsNewName.Trim();
+            this.DialogResult = DialogResult.OK;
+            this.Close();
+        }
+
+        ////////////////////////////////////////////////////////////////////////////////
+        // TEXTBOXES
+
+        private void ProjectNameTextBox_TextChanged(object sender, EventArgs e)
         {
 
         }

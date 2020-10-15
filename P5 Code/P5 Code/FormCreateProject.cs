@@ -12,6 +12,14 @@ namespace P5_Code
 {
     public partial class FormCreateProject : Form
     {
+        ////////////////////////////////////////////////////////////////////////////////
+        // PROPERTIES
+
+        public string NewProjectsName { get; set; }
+
+        ////////////////////////////////////////////////////////////////////////////////
+        // INITIALIZATION
+
         public FormCreateProject()
         {
             InitializeComponent();
@@ -28,22 +36,35 @@ namespace P5_Code
             this.StartPosition = FormStartPosition.CenterScreen;
         }
 
-        private void ProjectNameLabel_Click(object sender, EventArgs e)
-        {
+        ////////////////////////////////////////////////////////////////////////////////
+        // BUTTONS
 
+        private void CancelButton_Click(object sender, EventArgs e)
+        {
+            this.NewProjectsName = "";
+            this.DialogResult = DialogResult.Cancel;
+            this.Close();
         }
 
         private void AddProjectButton_Click(object sender, EventArgs e)
         {
-
-        }
-
-        private void CancelButton_Click(object sender, EventArgs e)
-        {
+            this.NewProjectsName = ProjectNameTextBox.Text;
+            this.DialogResult = DialogResult.OK;
             this.Close();
         }
 
+        ////////////////////////////////////////////////////////////////////////////////
+        // TEXTBOXES
+
         private void ProjectNameTextBox_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        ////////////////////////////////////////////////////////////////////////////////
+        // LABELS
+
+        private void ProjectNameLabel_Click(object sender, EventArgs e)
         {
 
         }

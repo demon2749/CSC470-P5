@@ -93,7 +93,7 @@
 
         private System.Windows.Forms.Label ProjectNameLabel;
         private System.Windows.Forms.TextBox ProjectNameTextBox;
-        private System.Windows.Forms.Button CancelButton;
+        private new System.Windows.Forms.Button CancelButton;
         private System.Windows.Forms.Button AddProjectButton;
     }
 }

@@ -17,7 +17,7 @@ namespace P5_Code
         public Project currentProject = null;
 
         public FakePreferenceRepository preferences = new FakePreferenceRepository();
-
+        
         public FormMain()
         {
             InitializeComponent();
@@ -58,20 +58,15 @@ namespace P5_Code
                 Environment.Exit(1);
             }
 
-            using (FormSelectProject projectSelectForm = new FormSelectProject())
+            using (FormSelectProject SelectProjectForm = new FormSelectProject())
             {
+                DialogResult result;
                 do
                 {
-                    projectSelectForm.ShowDialog(this);
+                    result = SelectProjectForm.ShowDialog();
+                } while (result != DialogResult.OK);
 
-                } while (projectSelectForm.DialogResult == DialogResult.OK && (projectSelectForm.returnProject is null));
-
-                if (!(projectSelectForm.DialogResult == DialogResult.Cancel))
-                {
-                    this.Close();
-                }
-
-                currentProject = projectSelectForm.returnProject;
+                currentProject = SelectProjectForm.SelectedProject;
             }
 
             if (currentProject == null)
@@ -189,25 +184,121 @@ namespace P5_Code
 
         private void createProjectToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            FormCreateProject createProjectForm = new FormCreateProject();
-            
-            createProjectForm.ShowDialog();
+            string NewProjectName = "";
+
+            bool validresult = false;
+            using (FormCreateProject CreateProjectForm = new FormCreateProject())
+            {
+                do
+                {
+                    if (CreateProjectForm.ShowDialog() == DialogResult.OK)
+                    {
+                        if (CreateProjectForm.NewProjectsName == "")
+                        {
+                            MessageBox.Show("Project name is empty or blank", "Attention");
+                        }
+                        else
+                        {
+                            NewProjectName = CreateProjectForm.NewProjectsName;
+                            validresult = true;
+                        }
+                    }
+                    else if (CreateProjectForm.ShowDialog() == DialogResult.Cancel)
+                    {
+                        validresult = true;
+                    }
+                } while (!validresult);
+            }
+
+            if (NewProjectName != "")
+            {
+                // instantiate new project and add to repo
+            }
         }
-
-
 
         private void removeProjectToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            FormRemoveProject removeProjectForm = new FormRemoveProject();
+            Project ProjectToRemove = null;
 
-            removeProjectForm.ShowDialog();
+            using (FormSelectProject SelectProjectForm = new FormSelectProject())
+            {
+                bool validresult = false;
+                do
+                {
+                    if (SelectProjectForm.ShowDialog() == DialogResult.OK)
+                    {
+                        if (SelectProjectForm.SelectedProject == currentProject)
+                        {
+                            MessageBox.Show("Cannot remove your current session project.", "Attention");
+                        }
+                        else
+                        {
+                            ProjectToRemove = SelectProjectForm.SelectedProject;
+                            validresult = true;
+                        }
+                    }
+                    else if (SelectProjectForm.ShowDialog() == DialogResult.No)
+                    {
+                        MessageBox.Show("No project found.", "Attention");
+                    }
+                    else if (SelectProjectForm.ShowDialog() == DialogResult.Cancel)
+                    {
+                        validresult = true;
+                    }
+                } while (!validresult);
+            }
+
+            if (ProjectToRemove != null)
+            {
+                // remove project from repo
+            }
         }
 
         private void modifyProjectToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            FormModifyProject modifyProjectForm = new FormModifyProject();
+            Project ProjectToModify = null;
 
-            modifyProjectForm.ShowDialog();
+            using (FormSelectProject SelectProjectForm = new FormSelectProject())
+            {
+                bool validresult = false;
+                do
+                {
+                    if (SelectProjectForm.ShowDialog() == DialogResult.OK)
+                    {
+                        if (SelectProjectForm.SelectedProject == currentProject)
+                        {
+                            MessageBox.Show("Cannot modify your current session project.", "Attention");
+                        }
+                        else
+                        {
+                            ProjectToModify = SelectProjectForm.SelectedProject;
+                            validresult = true;
+                        }
+                    }
+                    else if (SelectProjectForm.ShowDialog() == DialogResult.Cancel)
+                    {
+                        validresult = true;
+                    }
+                } while (!validresult);
+            }
+
+            if (ProjectToModify != null)
+            {
+                using (FormModifyProject ModifyProjectForm = new FormModifyProject())
+                {
+                    if (ModifyProjectForm.ShowDialog() == DialogResult.OK)
+                    {
+                        if (ModifyProjectForm.ProjectsNewName == "")
+                        {
+                            MessageBox.Show("Project name is empty or blank.", "Attention");
+                        }
+                        else
+                        {
+                            ProjectToModify.Name = ModifyProjectForm.ProjectsNewName;
+                        }
+                    }
+                }
+            }
         }
     }
 }
