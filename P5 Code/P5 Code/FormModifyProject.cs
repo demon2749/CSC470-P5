@@ -28,7 +28,7 @@ namespace P5_Code
 
         private void FormModifyProject_Load(object sender, EventArgs e)
         {
-
+            ProjectNameTextBox.Text = ProjectsNewName;
         }
 
         private void CenterTheForm()

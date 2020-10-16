@@ -12,15 +12,15 @@ namespace P5_Code
 {
     public partial class FormRemoveProject : Form
     {
+        public string ProjectToRemove;
         public FormRemoveProject()
         {
             InitializeComponent();
             this.CenterTheForm();
-            //ProjectToRemoveLabel.Text = ProjectToRemoveLabel.Text + this.Select()
         }
         private void FormRemoveProject_Load(object sender, EventArgs e)
         {
-
+            ProjectToRemoveLabel.Text = "Project to remove: " + ProjectToRemove;
         }
 
         private void CenterTheForm()
@@ -35,9 +35,23 @@ namespace P5_Code
 
         private void CancelButton_Click(object sender, EventArgs e)
         {
+            this.DialogResult = DialogResult.Cancel;
             this.Close();
         }
 
+        private void RemoveProjectButton_Click(object sender, EventArgs e)
+        {
 
+            if (MessageBox.Show("Are you sure you want to permenantly remove this project?", "Attention", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            {
+                this.DialogResult = DialogResult.OK;
+            }
+            else
+            {
+                this.DialogResult = DialogResult.Cancel;
+            }
+            
+            this.Close();
+        }
     }
 }

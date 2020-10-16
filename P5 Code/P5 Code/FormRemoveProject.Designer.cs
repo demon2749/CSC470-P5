@@ -61,6 +61,7 @@
             this.RemoveProjectButton.TabIndex = 2;
             this.RemoveProjectButton.Text = "Remove Project";
             this.RemoveProjectButton.UseVisualStyleBackColor = true;
+            this.RemoveProjectButton.Click += new System.EventHandler(this.RemoveProjectButton_Click);
             // 
             // FormRemoveProject
             // 
@@ -71,7 +72,7 @@
             this.Controls.Add(this.CancelButton);
             this.Controls.Add(this.ProjectToRemoveLabel);
             this.Name = "FormRemoveProject";
-            this.Text = "FormDeleteProject";
+            this.Text = "Remove Project";
             this.Load += new System.EventHandler(this.FormRemoveProject_Load);
             this.ResumeLayout(false);
             this.PerformLayout();

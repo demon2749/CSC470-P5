@@ -28,13 +28,27 @@ namespace P5_Code
                 Projects.Add(new Project // req 6a
                 {
                     Id = GetNextId(),
-                    Name = "Sample Project Id0",
+                    Name = "Sample Project 1",
+                });
+
+                Projects.Add(new Project // req 6a
+                {
+                    Id = GetNextId(),
+                    Name = "Sample Project 2",
+                });
+
+                Projects.Add(new Project // req 6a
+                {
+                    Id = GetNextId(),
+                    Name = "Sample Project =)",
                 });
             }
         }
-        public string Add(Project project, int outId)//idk what this outId is for. referenced in UML diagram.
+        public string Add(Project project, out int Id)//idk what this outId is for. referenced in UML diagram.
         {
             project.Name = project.Name.Trim(); //req 6c
+            project.Id = GetNextId();
+            Id = project.Id;
             if (project.Name != "") // req 6d
             {
                 if (!IsDuplicateName(project.Name)) //req 6f
@@ -57,7 +71,7 @@ namespace P5_Code
         {
             Project projectToDelete = null;
 
-            foreach(Project project in Projects) //locates the target project.
+            foreach(Project project in Projects)
             {
                 if (project.Id == projectId)
                 {
@@ -65,35 +79,57 @@ namespace P5_Code
                 }
             }
 
-            throw new NotImplementedException();
-            // Not sure if these go here.
-            if(projectToDelete == null) // checks to ensure it exists, or throws error.
+            if(projectToDelete == null)
             {
                 return NO_PROJECT_FOUND_ERROR;
             }
-
-            if (!true/*projectToDelete.Id == preference */)
-            {
-                return "Cannot remove your current session project."; // i think this condition needs access to FakePrefenceRepo, which i haven't done yet.
-            }
-
+            
             Projects.Remove(projectToDelete);
             return NO_ERROR;
         }
         public string Modify(int projectId, Project project)
         {
-            throw new NotImplementedException();//-----------------------------------------------------------------------------------------------------------------!!
+            Project ProjectToMod = null;
+
+            foreach (Project prjt in Projects)
+            {
+                if (prjt.Id == projectId)
+                {
+                    ProjectToMod = prjt;
+                }
+            }
+
+            foreach (Project prjt in Projects)
+            {
+                if (project.Name == prjt.Name)
+                {
+                    return DUPLICATE_PROJECT_NAME_ERROR;
+                }
+            }
+
+            if (ProjectToMod == null)
+            {
+                return NO_PROJECT_FOUND_ERROR;
+            }
+
+            if(project.Name == "")
+            {
+                return EMPTY_PROJECT_NAME_ERROR;
+            }
+
+            ProjectToMod.Name = project.Name;
+            return NO_ERROR;
         }
         public List<Project> GetAll()
         {
-            return Projects; // return project list.
+            return Projects;
         }
         public bool IsDuplicateName(string projectName)
         {
             foreach(Project project in Projects)
             {
                 if(project.Name == projectName)
-                { //if the projectName is equal to any of the previous projects, return true.
+                {
                     return true;
                 }
             }

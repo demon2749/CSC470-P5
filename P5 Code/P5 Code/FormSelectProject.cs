@@ -17,8 +17,6 @@ namespace P5_Code
 
         FakeProjectRepository repo;
 
-        bool prevClickCancel = false;
-
         public FormSelectProject()
         {
             repo = new FakeProjectRepository();
@@ -54,21 +52,12 @@ namespace P5_Code
 
         private void Cancel_Click(object sender, EventArgs e)
         {
-            if (prevClickCancel)
-            {
-                this.DialogResult = DialogResult.Cancel;
-                this.Close();
-            }
-            else
-            {
-                MessageBox.Show("A project must be selected.", "Attention");
-                prevClickCancel = true;
-            }
+            this.DialogResult = DialogResult.Cancel;
+            this.Close();
         }
 
         private void SelectProject_Click(object sender, EventArgs e)
         {
-            prevClickCancel = false;
 
             if (projectListBox.SelectedItem == null)
             {

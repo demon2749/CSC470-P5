@@ -17,7 +17,9 @@ namespace P5_Code
         public Project currentProject = null;
 
         public FakePreferenceRepository preferences = new FakePreferenceRepository();
-        
+
+        public int Id;
+
         public FormMain()
         {
             InitializeComponent();
@@ -171,61 +173,81 @@ namespace P5_Code
         }
 
         private void selectProjectToolStripMenuItem_Click(object sender, EventArgs e)
-        {
+        { // SELECT
+            DialogResult result;
             using (FormSelectProject selectProject = new FormSelectProject())
             {
-                do
-                {
-                    selectProject.ShowDialog(this);
+                selectProject.ShowDialog(this);
+                result = selectProject.DialogResult;
 
-                } while (selectProject.DialogResult == DialogResult.OK);
+                if(result == DialogResult.OK)
+                {
+                    currentProject = selectProject.SelectedProject;
+                }
+            }
+            if (result == DialogResult.OK)
+            {
+                this.SetText();
             }
         }
 
         private void createProjectToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            string NewProjectName = "";
+        { // CREATE
+
+            string newProjectOut;
+            DialogResult newProjectResult;
+
+            FakeProjectRepository projects = new FakeProjectRepository();
+            Project newProject = new Project();
 
             bool validresult = false;
             using (FormCreateProject CreateProjectForm = new FormCreateProject())
             {
                 do
                 {
-                    if (CreateProjectForm.ShowDialog() == DialogResult.OK)
+                    CreateProjectForm.ShowDialog();
+                    newProjectResult = CreateProjectForm.DialogResult;
+
+                    if (newProjectResult == DialogResult.OK)
                     {
-                        if (CreateProjectForm.NewProjectsName == "")
+
+                        if (CreateProjectForm.NewProjectsName != "")
                         {
-                            MessageBox.Show("Project name is empty or blank", "Attention");
-                        }
-                        else
-                        {
-                            NewProjectName = CreateProjectForm.NewProjectsName;
-                            validresult = true;
+
+                            newProject.Name = CreateProjectForm.NewProjectsName;
+                            newProjectOut = projects.Add(newProject, out int Id);
+
+                            if (newProjectOut != "")
+                            {
+                                MessageBox.Show(newProjectOut); // shows error string from FakeProjectRepo.
+                            }
+                            else
+                            {
+                                validresult = true;
+                            }
                         }
                     }
-                    else if (CreateProjectForm.ShowDialog() == DialogResult.Cancel)
+                    else if (newProjectResult == DialogResult.Cancel)
                     {
                         validresult = true;
                     }
-                } while (!validresult);
-            }
 
-            if (NewProjectName != "")
-            {
-                // instantiate new project and add to repo
+                } while (!validresult);
             }
         }
 
         private void removeProjectToolStripMenuItem_Click(object sender, EventArgs e)
-        {
+        { // REMOVE
             Project ProjectToRemove = null;
+            bool validresult = false;
+            FakeProjectRepository projects = new FakeProjectRepository();
 
             using (FormSelectProject SelectProjectForm = new FormSelectProject())
             {
-                bool validresult = false;
                 do
                 {
-                    if (SelectProjectForm.ShowDialog() == DialogResult.OK)
+                    SelectProjectForm.ShowDialog();
+                    if (SelectProjectForm.DialogResult == DialogResult.OK)
                     {
                         if (SelectProjectForm.SelectedProject == currentProject)
                         {
@@ -237,11 +259,7 @@ namespace P5_Code
                             validresult = true;
                         }
                     }
-                    else if (SelectProjectForm.ShowDialog() == DialogResult.No)
-                    {
-                        MessageBox.Show("No project found.", "Attention");
-                    }
-                    else if (SelectProjectForm.ShowDialog() == DialogResult.Cancel)
+                    else if (SelectProjectForm.DialogResult == DialogResult.Cancel)
                     {
                         validresult = true;
                     }
@@ -250,20 +268,32 @@ namespace P5_Code
 
             if (ProjectToRemove != null)
             {
-                // remove project from repo
+                using (FormRemoveProject RemoveProjectForm = new FormRemoveProject())
+                {
+                    RemoveProjectForm.ProjectToRemove = ProjectToRemove.Name;
+                    RemoveProjectForm.ShowDialog(this);
+
+                    if(RemoveProjectForm.DialogResult == DialogResult.OK)
+                    {
+                        projects.Remove(ProjectToRemove.Id);
+                    }
+                }
             }
         }
 
         private void modifyProjectToolStripMenuItem_Click(object sender, EventArgs e)
-        {
+        { // MODIFY
             Project ProjectToModify = null;
+            bool validresult = false;
+            string modifyProjectOut;
+            FakeProjectRepository projects = new FakeProjectRepository();
 
             using (FormSelectProject SelectProjectForm = new FormSelectProject())
             {
-                bool validresult = false;
                 do
                 {
-                    if (SelectProjectForm.ShowDialog() == DialogResult.OK)
+                    SelectProjectForm.ShowDialog();
+                    if (SelectProjectForm.DialogResult == DialogResult.OK)
                     {
                         if (SelectProjectForm.SelectedProject == currentProject)
                         {
@@ -275,7 +305,7 @@ namespace P5_Code
                             validresult = true;
                         }
                     }
-                    else if (SelectProjectForm.ShowDialog() == DialogResult.Cancel)
+                    else if (SelectProjectForm.DialogResult == DialogResult.Cancel)
                     {
                         validresult = true;
                     }
@@ -286,17 +316,33 @@ namespace P5_Code
             {
                 using (FormModifyProject ModifyProjectForm = new FormModifyProject())
                 {
-                    if (ModifyProjectForm.ShowDialog() == DialogResult.OK)
+                    validresult = false;
+                    do
                     {
-                        if (ModifyProjectForm.ProjectsNewName == "")
+                        ModifyProjectForm.ProjectsNewName = ProjectToModify.Name;
+                        if (ModifyProjectForm.ShowDialog() == DialogResult.OK)
                         {
-                            MessageBox.Show("Project name is empty or blank.", "Attention");
+                            Project ModifiedProject = new Project
+                            {
+                                Name = ModifyProjectForm.ProjectsNewName,
+                                Id = ProjectToModify.Id
+                            };
+                            modifyProjectOut = projects.Modify(ProjectToModify.Id, ModifiedProject);
+
+                            if (modifyProjectOut != "")
+                            {
+                                MessageBox.Show(modifyProjectOut);
+                            }
+                            else
+                            {
+                                validresult = true;
+                            }
                         }
-                        else
+                        else if (ModifyProjectForm.DialogResult == DialogResult.Cancel)
                         {
-                            ProjectToModify.Name = ModifyProjectForm.ProjectsNewName;
+                            validresult = true;
                         }
-                    }
+                    } while (!validresult);
                 }
             }
         }
